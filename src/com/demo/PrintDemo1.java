@@ -39,7 +39,7 @@ public class PrintDemo1 {
             PrintService defaultService = PrintServiceLookup
                     .lookupDefaultPrintService();
             // 显示打印对话框
-            PrintService service = ServiceUI.printDialog(null, 200, 200,
+           /* PrintService service = ServiceUI.printDialog(null, 200, 200,
                     printService, defaultService, flavor, pras);
             if (service != null) {
                 try {
@@ -51,7 +51,7 @@ public class PrintDemo1 {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-            }
+            }*/
         }
     }
 }
