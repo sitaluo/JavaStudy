@@ -1,5 +1,4 @@
 package com.demo;
-import java.awt.PrintJob;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Locale;
@@ -29,9 +28,9 @@ public class PrintUtil {
         try {
             
         	PrintService ps = PrintServiceLookup.lookupDefaultPrintService();
-
             PrintRequestAttributeSet pras = new HashPrintRequestAttributeSet();
             pras.add(OrientationRequested.PORTRAIT);
+            //pras.add(OrientationRequested.LANDSCAPE);
             pras.add(new Copies(count));
             pras.add(PrintQuality.HIGH);
             JobName jobName = new JobName(fileName, Locale.getDefault());
@@ -39,7 +38,8 @@ public class PrintUtil {
             
             DocAttributeSet das = new HashDocAttributeSet();
             // 设置打印纸张的大小（以毫米为单位）
-            das.add(new MediaPrintableArea(0, 0, 210, 296, MediaPrintableArea.MM));
+            //das.add(new MediaPrintableArea(0, 0, 210, 296, MediaPrintableArea.MM));
+            das.add(new MediaPrintableArea(0, 0, 203, 103, MediaPrintableArea.MM));
             fin = new FileInputStream(fileName);
 
             DocFlavor dof = null;
@@ -105,7 +105,7 @@ public class PrintUtil {
     }
 
     public static void main(String[] args) {
-		PrintUtil.drawImage("G:\\temp2\\53.jpg", 1);
+		PrintUtil.drawImage("G:\\printtest\\4.jpg", 1);
 		System.out.println("main...");
     }
 

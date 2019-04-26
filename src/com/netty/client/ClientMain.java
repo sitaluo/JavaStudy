@@ -5,6 +5,9 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URI;
 
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLEngine;
+
 import io.netty.bootstrap.Bootstrap;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
@@ -30,6 +33,7 @@ import io.netty.handler.codec.http.websocketx.WebSocketClientHandshakerFactory;
 import io.netty.handler.codec.http.websocketx.WebSocketVersion;
 import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
+import io.netty.handler.ssl.SslHandler;
 
 public class ClientMain {
     public static void main(String[] args) throws Exception{
@@ -44,12 +48,19 @@ public class ClientMain {
                 .handler(new ChannelInitializer<SocketChannel>() {
                     protected void initChannel(SocketChannel socketChannel) throws Exception {
                         ChannelPipeline p = socketChannel.pipeline();
+                        if("ws".startsWith("wss")) {
+                        	SSLEngine sslEngine = SSLContext.getDefault().createSSLEngine();
+                        	sslEngine.setUseClientMode(true);
+                        	p.addLast("ssl", new SslHandler(sslEngine));
+                        }
                         p.addLast(new ChannelHandler[]{new HttpClientCodec(),
                                 new HttpObjectAggregator(1024*1024*10)});
                         p.addLast("hookedHandler", new WebSocketClientHandler());
                     }
                 });
-        URI websocketURI = new URI("ws://localhost:8899/ws");
+//        URI websocketURI = new URI("ws://localhost:8899/ws");
+        //URI websocketURI = new URI("wss://picmeclub.com/webSocketHandler");
+        URI websocketURI = new URI("ws://localhost:80/picme/webSocketHandler");
         HttpHeaders httpHeaders = new DefaultHttpHeaders();
         //进行握手
         WebSocketClientHandshaker handshaker = WebSocketClientHandshakerFactory.newHandshaker(websocketURI, WebSocketVersion.V13, (String)null, true,httpHeaders);
