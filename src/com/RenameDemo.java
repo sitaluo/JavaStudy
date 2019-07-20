@@ -5,7 +5,33 @@ import java.util.Date;
 
 public class RenameDemo {
     public static void main(String[] args) {
-        //文件存在的路径
+    	reanameVideoFile();
+         
+    }
+    
+    public static void reanameVideoFile() {
+    	String source = "E:\\BaiduYunDownload\\亿级流量电商详情页系统实战（第二版）：缓存架构+高可用服务架构+微服务架构";
+    	File files = new File(source);
+    	File[] list = files.listFiles();
+    	int n = 1;
+    	for (File file : list) {
+			//System.out.println(file.getName() + " " + file.isDirectory());
+			if(file.isDirectory()) {
+				String fileName = file.getName();
+				String aviFolder = file.getAbsolutePath() +"/"+"视频";
+				File[] listFiles = new File(aviFolder).listFiles();
+				if(listFiles.length == 0) continue;
+				File avi = listFiles[0];
+				System.out.println(n++ + avi.getAbsolutePath());
+				String t = source + "video" + "/"+ fileName +".avi";
+				avi.renameTo(new File(t));
+				//if(n ==2) break;
+			}
+		}
+    }
+ 
+    public void test1() {
+    	 //文件存在的路;
         String path = "G:\\temp3\\t1";
          
         File rootDir = new File(path);
@@ -27,7 +53,5 @@ public class RenameDemo {
              
         }
          
-         
     }
- 
 }
