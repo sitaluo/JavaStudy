@@ -2,6 +2,7 @@ package com.demo;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.util.Locale;
 
 import javax.print.Doc;
 import javax.print.DocFlavor;
@@ -13,6 +14,9 @@ import javax.print.SimpleDoc;
 import javax.print.attribute.DocAttributeSet;
 import javax.print.attribute.HashDocAttributeSet;
 import javax.print.attribute.HashPrintRequestAttributeSet;
+import javax.print.attribute.standard.JobName;
+import javax.print.attribute.standard.MediaPrintableArea;
+import javax.print.attribute.standard.PrintQuality;
 import javax.swing.JFileChooser;
 
 public class PrintDemo1 {
@@ -23,8 +27,11 @@ public class PrintDemo1 {
             File file = fileChooser.getSelectedFile(); // 获取选择的文件
             // 构建打印请求属性集
             HashPrintRequestAttributeSet pras = new HashPrintRequestAttributeSet();
+            pras.add(PrintQuality.HIGH);
+            JobName jobName = new JobName("test", Locale.getDefault());
+            pras.add(jobName);
             // 设置打印格式，因为未确定类型，所以选择autosense
-            DocFlavor flavor = DocFlavor.INPUT_STREAM.AUTOSENSE;
+            DocFlavor flavor = DocFlavor.INPUT_STREAM.JPEG;
             // 查找所有的可用的打印服务
             PrintService printService[] = PrintServiceLookup.lookupPrintServices(flavor, pras);
             for (PrintService printService2 : printService) {
@@ -39,7 +46,7 @@ public class PrintDemo1 {
             PrintService defaultService = PrintServiceLookup
                     .lookupDefaultPrintService();
             // 显示打印对话框
-           /* PrintService service = ServiceUI.printDialog(null, 200, 200,
+            PrintService service = ServiceUI.printDialog(null, 200, 200,
                     printService, defaultService, flavor, pras);
             if (service != null) {
                 try {
@@ -51,7 +58,7 @@ public class PrintDemo1 {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-            }*/
+            }
         }
     }
 }
