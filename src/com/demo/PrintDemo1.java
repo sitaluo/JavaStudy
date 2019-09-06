@@ -15,7 +15,7 @@ import javax.print.attribute.DocAttributeSet;
 import javax.print.attribute.HashDocAttributeSet;
 import javax.print.attribute.HashPrintRequestAttributeSet;
 import javax.print.attribute.standard.JobName;
-import javax.print.attribute.standard.MediaPrintableArea;
+import javax.print.attribute.standard.Media;
 import javax.print.attribute.standard.PrintQuality;
 import javax.swing.JFileChooser;
 
