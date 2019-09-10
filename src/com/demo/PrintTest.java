@@ -21,7 +21,7 @@ public class PrintTest {
 		System.out.println(rowNum);
 		PrintService defaultService = PrintServiceLookup.lookupDefaultPrintService();
 		PrintServiceAttributeSet attributes2 = defaultService.getAttributes();
-		
+		attributes2.add(MediaSizeName.NA_10X15_ENVELOPE);
 		PrinterState attributes3 = defaultService.getAttribute(PrinterState.class);
 		Object attributes5 =  defaultService.getSupportedAttributeValues(PrinterState.class, null, null);
 		MediaPrintableArea defaultAttributeValue = (MediaPrintableArea) defaultService.getDefaultAttributeValue(MediaPrintableArea.class);
