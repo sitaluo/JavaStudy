@@ -30,18 +30,16 @@ public class PrintUtil {
         	PrintService ps = PrintServiceLookup.lookupDefaultPrintService();
             PrintRequestAttributeSet pras = new HashPrintRequestAttributeSet();
             pras.add(OrientationRequested.PORTRAIT);
-            pras.add(OrientationRequested.LANDSCAPE);
             //pras.add(OrientationRequested.LANDSCAPE);
             pras.add(new Copies(count));
             pras.add(PrintQuality.HIGH);
             JobName jobName = new JobName(fileName, Locale.getDefault());
             pras.add(jobName);
-    		
+            
             DocAttributeSet das = new HashDocAttributeSet();
             // 设置打印纸张的大小（以毫米为单位）
             //das.add(new MediaPrintableArea(0, 0, 210, 296, MediaPrintableArea.MM));
             das.add(new MediaPrintableArea(0, 0, 203, 103, MediaPrintableArea.MM));
-            //das.add(new MediaPrintableArea(20, 0, 103, 203, MediaPrintableArea.MM));
             fin = new FileInputStream(fileName);
 
             DocFlavor dof = null;
@@ -107,7 +105,7 @@ public class PrintUtil {
     }
 
     public static void main(String[] args) {
-		PrintUtil.drawImage("G:\\printtest\\5.jpg", 1);
+		PrintUtil.drawImage("G:\\printtest\\4.jpg", 1);
 		System.out.println("main...");
     }
 
