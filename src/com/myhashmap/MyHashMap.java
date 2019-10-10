@@ -34,12 +34,33 @@ public class MyHashMap<K,V> implements MyMap<K,V>{
 	public V put(K k, V v) {
 		V oldValue = null;
 		//考虑是否需要重新扩容，如果扩容后需要重新散列; 如果table为空或者到达阈值的时候需要扩容
-		if(table == null || table.length == 0 || entryUseSize >= initSize * loadFactor) {
+		if(table == null) {
+			resize(initSize);
+		}
+		if(entryUseSize >= initSize * loadFactor) {
 			//扩容为原来的2倍
 			resize(initSize << 1);
 		}
-		
-		return null;
+		int index = hash(k) & (initSize - 1);
+		System.out.println("put "+ k + " index:"+index);
+		if(table[index] == null) {
+			table[index] = new Entry<>(k,v,null);
+			++entryUseSize;
+		}else {
+			Entry<K,V> entry = table[index];
+			Entry<K,V> e = entry;
+			while(entry != null) {
+				if(entry.getKey() == k || entry.getKey().equals(k)) {
+					oldValue = entry.getValue();
+					entry.value = v;
+					return oldValue;
+				}
+				entry = entry.next;
+			}
+			table[index] = new Entry<>(k, v, e);
+			++entryUseSize;
+		}
+		return oldValue;
 	}
 
 	/**
@@ -47,6 +68,7 @@ public class MyHashMap<K,V> implements MyMap<K,V>{
 	 * @param lenth 扩容后数组的长度
 	 */
 	private void resize(int length) {
+		System.out.println("resize to: "+length);
 		initSize = length;
 		entryUseSize = 0;
 		Entry<K,V>[] oldTable = table;
@@ -62,7 +84,7 @@ public class MyHashMap<K,V> implements MyMap<K,V>{
 				do {
 					put(entry.getKey(), entry.getValue());
 					entry = entry.next;
-				}while(entry.next != null);
+				}while(entry != null);
 			}
 			
 		}
@@ -76,6 +98,7 @@ public class MyHashMap<K,V> implements MyMap<K,V>{
 			return null;
 		}
 		int index = hash(k) & (initSize - 1);
+		System.out.println("get"+ k + " index:"+index);
 		if(table[index] == null) {
 			return null;
 		}else {
