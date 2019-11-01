@@ -42,11 +42,12 @@ public class MyHashMap<K,V> implements MyMap<K,V>{
 			resize(initSize << 1);
 		}
 		int index = hash(k) & (initSize - 1);
-		System.out.println("put "+ k + " index:"+index);
+		//System.out.println("put "+ k + " index:"+index);
 		if(table[index] == null) {
 			table[index] = new Entry<>(k,v,null);
 			++entryUseSize;
 		}else {
+			System.out.println("hash冲突： "+ k + " index:"+index);
 			Entry<K,V> entry = table[index];
 			Entry<K,V> e = entry;
 			while(entry != null) {
@@ -98,7 +99,6 @@ public class MyHashMap<K,V> implements MyMap<K,V>{
 			return null;
 		}
 		int index = hash(k) & (initSize - 1);
-		System.out.println("get"+ k + " index:"+index);
 		if(table[index] == null) {
 			return null;
 		}else {
@@ -108,7 +108,7 @@ public class MyHashMap<K,V> implements MyMap<K,V>{
 					return entry.value;
 				}
 				entry = entry.next;
-			}while(entry.next != null);
+			}while(entry != null);
 		}
 		return null;
 	}
@@ -139,7 +139,18 @@ public class MyHashMap<K,V> implements MyMap<K,V>{
 	}
 	
 	static final int hash(Object key) {
-        int h;
-        return (key == null) ? 0 : (h = key.hashCode()) ^ (h >>> 16);
+		return hash(key.hashCode());
+        //int h;
+        //return (key == null) ? 0 : (h = key.hashCode()) ^ (h >>> 16);
     }
+	
+	  static int hash(int h) {
+	        // This function ensures that hashCodes that differ only by
+	        // constant multiples at each bit position have a bounded
+	        // number of collisions (approximately 8 at default load factor).
+	        h ^= (h >>> 20) ^ (h >>> 12);
+	        return h ^ (h >>> 7) ^ (h >>> 4);
+	    }
+	
+	
 }

@@ -27,9 +27,9 @@ public class PrintDemo1 {
             File file = fileChooser.getSelectedFile(); // 获取选择的文件
             // 构建打印请求属性集
             HashPrintRequestAttributeSet pras = new HashPrintRequestAttributeSet();
-            pras.add(PrintQuality.HIGH);
-            JobName jobName = new JobName("test", Locale.getDefault());
-            pras.add(jobName);
+           // pras.add(PrintQuality.HIGH);
+           // JobName jobName = new JobName("test", Locale.getDefault());
+           // pras.add(jobName);
             // 设置打印格式，因为未确定类型，所以选择autosense
             DocFlavor flavor = DocFlavor.INPUT_STREAM.JPEG;
             // 查找所有的可用的打印服务

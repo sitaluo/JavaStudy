@@ -16,7 +16,10 @@ import javax.print.attribute.HashPrintRequestAttributeSet;
 import javax.print.attribute.PrintRequestAttributeSet;
 import javax.print.attribute.standard.Copies;
 import javax.print.attribute.standard.JobName;
+import javax.print.attribute.standard.Media;
 import javax.print.attribute.standard.MediaPrintableArea;
+import javax.print.attribute.standard.MediaSizeName;
+import javax.print.attribute.standard.MediaTray;
 import javax.print.attribute.standard.OrientationRequested;
 import javax.print.attribute.standard.PrintQuality;
 import javax.print.event.PrintJobEvent;
@@ -41,6 +44,22 @@ public class PrintUtil {
             // 设置打印纸张的大小（以毫米为单位）
             //das.add(new MediaPrintableArea(0, 0, 210, 296, MediaPrintableArea.MM));
             das.add(new MediaPrintableArea(0, 0, 203, 103, MediaPrintableArea.MM));
+            Media[] objs = (Media[]) ps.getSupportedAttributeValues(Media.class, null, null);
+    		for (Media obj : objs) {
+    			System.out.println("---:"+obj.getClass());
+    			System.out.println("---" + obj + "," + obj.getName() + "," + obj.getValue() + ",");
+    			
+    			 if (obj instanceof MediaSizeName) { 
+    				 System.out.println("纸张型号：" + obj); 
+    				 if(obj.toString().equals("PR (4x6)")) {
+    					 System.out.println("add PR (4x6)");
+    					 pras.add(obj);
+    				 }
+    			 } else
+    			 if (obj instanceof MediaTray) { System.out.println("纸张来源：" + obj); }
+    			 
+    		}
+    		System.out.println("========");
             //das.add(new MediaPrintableArea(20, 0, 103, 203, MediaPrintableArea.MM));
             fin = new FileInputStream(fileName);
 

@@ -21,7 +21,6 @@ public class PrintTest {
 		System.out.println(rowNum);
 		PrintService defaultService = PrintServiceLookup.lookupDefaultPrintService();
 		PrintServiceAttributeSet attributes2 = defaultService.getAttributes();
-		attributes2.add(MediaSizeName.NA_10X15_ENVELOPE);
 		PrinterState attributes3 = defaultService.getAttribute(PrinterState.class);
 		Object attributes5 =  defaultService.getSupportedAttributeValues(PrinterState.class, null, null);
 		MediaPrintableArea defaultAttributeValue = (MediaPrintableArea) defaultService.getDefaultAttributeValue(MediaPrintableArea.class);
@@ -40,8 +39,12 @@ public class PrintTest {
 			System.out.println("---:"+obj.getClass());
 			System.out.println("---" + obj + "," + obj.getName() + "," + obj.getValue() + ",");
 			
-			 if (obj instanceof MediaSizeName) { System.out.println("纸张型号：" + obj); } else
-			 if (obj instanceof MediaTray) { System.out.println("纸张来源：" + obj); }
+			 if (obj instanceof MediaSizeName) { 
+				 System.out.println("纸张型号：" + obj); 
+				 if(obj.toString().equals("PR (4x6)") || "(6x4)".equals(obj.toString())) {
+					 
+				 }
+			 } else if (obj instanceof MediaTray) { System.out.println("纸张来源：" + obj); }
 			 
 		}
 		System.out.println("========");
